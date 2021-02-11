@@ -48,3 +48,6 @@ if __name__ == "__main__":
     REGISTRY.register(collector)
 
     start_http_server(8080)
+
+    while True:
+        time.sleep(1)
