@@ -28,7 +28,7 @@ def insert_build(build):
     print("submitted build id: %s" % (build_id))
 
 def create_mongo_client_connection(username, password, database):
-    uri = "mongodb://%s:%s@mongodb:27017/%s" % (mongo_username,mongo_password,mongo_database)
+    uri = "mongodb://%s:%s@mongodb:27017/%s" % (username,password,database)
     return MongoClient(uri)
 
 if __name__=='__main__':
