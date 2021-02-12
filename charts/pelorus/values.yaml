@@ -26,18 +26,32 @@ exporters:
       value: deploytime/app.py
     - name: LOG_LEVEL
       value: DEBUG
+    - name: NAMESPACES
+      value: test-nginx-prod
     source_ref: master
     source_url: https://github.com/redhat-cop/pelorus.git
-  - app_name: committime-github
+  # - app_name: committime-github
+  #   env_from_secrets: 
+  #   - github-secret
+  #   source_context_dir: exporters/
+  #   extraEnv:
+  #   - name: APP_FILE
+  #     value: committime/app.py
+  #   - name: LOG_LEVEL
+  #     value: DEBUG
+  #   source_ref: master
+  #   source_url: https://github.com/haithamshahin333/pelorus.git
+  - app_name: committime-generic
     env_from_secrets: 
     - github-secret
+    - mongodb
     source_context_dir: exporters/
     extraEnv:
     - name: APP_FILE
-      value: committime/app.py
+      value: genericexporter/app.py
     - name: LOG_LEVEL
       value: DEBUG
-    source_ref: master
+    source_ref: genericexporter
     source_url: https://github.com/haithamshahin333/pelorus.git
 
 snapshot_schedule: "@monthly"
