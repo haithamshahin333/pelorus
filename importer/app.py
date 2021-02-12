@@ -23,7 +23,7 @@ def insert_build():
 
 def insert_build(build):
     print("submitting build: %s" % (build))
-    builds = mongo_client.db.builds
+    builds = mongo_client.build.builds
     build_id = builds.insert_one(build).inserted_id
     print("submitted build id: %s" % (build_id))
 
@@ -36,7 +36,6 @@ if __name__=='__main__':
 
     mongo_username = os.environ.get('MONGODB_USER')
     mongo_password = os.environ.get('MONGODB_PASSWORD')
-    mongo_database = os.environ.get('MONGODB_DATABASE')
-    mongo_client = create_mongo_client_connection(mongo_username, mongo_password, mongo_database)
+    mongo_client = create_mongo_client_connection(mongo_username, mongo_password, 'build')
 
     app.run(host="0.0.0.0", port=8080)
