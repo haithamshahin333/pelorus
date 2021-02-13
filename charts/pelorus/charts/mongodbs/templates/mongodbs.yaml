@@ -1,5 +1,0 @@
-{{- range $index, $mongodb := .Values.instances }}
-  {{ include "mongodbs.secret" $mongodb }}
-  {{ include "mongodbs.deploymentconfig" $mongodb }}
-  {{ include "mongodbs.service" $mongodb }}
-{{- end }}

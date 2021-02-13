@@ -1,22 +1,22 @@
-{{- define "mongodbs.deploymentconfig" }}
+{{- define "mongodb.deploymentconfig" }}
 ---
 apiVersion: apps.openshift.io/v1
 kind: DeploymentConfig
 metadata:
   labels:
-    app.kubernetes.io/name: {{ .app_name }}
+    app.kubernetes.io/name: "mongodb-{{ .app_name }}"
     application: {{ .app_name }}
-  name: {{ .app_name }}
+  name: "mongodb-{{ .app_name }}"
 spec:
   replicas: 1
   selector:
-    name: {{ .app_name }}
+    name: "mongodb-{{ .app_name }}"
   strategy:
     type: Recreate
   template:
     metadata:
       labels:
-        name: {{ .app_name }}
+        name: "mongodb-{{ .app_name }}"
     spec:
       containers:
       - capabilities: {}
@@ -25,22 +25,22 @@ spec:
           valueFrom:
             secretKeyRef:
               key: MONGODB_USER
-              name: {{ .app_name }}
+              name: "mongodb-{{ .app_name }}"
         - name: MONGODB_PASSWORD
           valueFrom:
             secretKeyRef:
               key: MONGODB_PASSWORD
-              name: {{ .app_name }}
+              name: "mongodb-{{ .app_name }}"
         - name: MONGODB_ADMIN_PASSWORD
           valueFrom:
             secretKeyRef:
               key: MONGODB_ADMIN_PASSWORD
-              name: {{ .app_name }}
+              name: "mongodb-{{ .app_name }}"
         - name: MONGODB_DATABASE
           valueFrom:
             secretKeyRef:
               key: MONGODB_DATABASE
-              name: {{ .app_name }}
+              name: "mongodb-{{ .app_name }}"
         image: ' '
         imagePullPolicy: IfNotPresent
         livenessProbe:
@@ -64,20 +64,20 @@ spec:
           timeoutSeconds: 1
         resources:
           limits:
-            memory: {{ .memory_limit }}
+            memory: {{ .mongodb.memory_limit }}
         securityContext:
           capabilities: {}
           privileged: false
         terminationMessagePath: /dev/termination-log
         volumeMounts:
         - mountPath: /var/lib/mongodb/data
-          name: {{ .app_name }}-data
+          name: "mongodb-{{ .app_name }}-data"
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       volumes:
       - emptyDir:
           medium: ""
-        name: {{ .app_name }}-data
+        name: "mongodb-{{ .app_name }}-data"
   triggers:
   - imageChangeParams:
       automatic: true
@@ -85,8 +85,8 @@ spec:
       - mongodb
       from:
         kind: ImageStreamTag
-        name: "mongodb:{{ .mongodb_version }}"
-        namespace: {{ .namespace }}
+        name: {{ .mongodb.imagestream }}
+        namespace: {{ .mongodb.namespace }}
       lastTriggeredImage: ""
     type: ImageChange
   - type: ConfigChange

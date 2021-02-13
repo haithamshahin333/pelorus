@@ -27,13 +27,9 @@ spec:
       containers:
       - name: {{ .app_name }}
         imagePullPolicy: Always
-      {{- if .env_from_secrets }}
         envFrom:
-        {{- range .env_from_secrets }}  
         - secretRef:
-            name: {{ . }}
-        {{- end}}
-      {{- end}}
+            name: mongodb-{{ .app_name }}
         env:
 {{- if .extraEnv }}
 {{ toYaml .extraEnv | indent 8 }}

@@ -1,11 +1,11 @@
-{{- define "mongodbs.service" }}
+{{- define "mongodb.service" }}
 ---
 apiVersion: v1
 kind: Service
 metadata:
   labels:
-    app.kubernetes.io/name: {{ .app_name }}
-  name: {{ .app_name }}
+    app.kubernetes.io/name: "mongodb-{{ .app_name }}"
+  name: "mongodb-{{ .app_name }}"
 spec:
   ports:
   - name: http
@@ -13,6 +13,6 @@ spec:
     protocol: TCP
     targetPort: 27017
   selector:
-    name: {{ .app_name }}
+    name: "mongodb-{{ .app_name }}"
   type: ClusterIP
 {{- end }}
