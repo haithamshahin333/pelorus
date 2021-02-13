@@ -1,0 +1,9 @@
+instances:
+- app_name: mongodb-build
+  namespace: openshift
+  mongodb_version: 3.6
+  memory_limit: 512Mi
+  mongodb_admin_password: test
+  mongodb_database: test
+  mongodb_password: test
+  mongodb_user: test

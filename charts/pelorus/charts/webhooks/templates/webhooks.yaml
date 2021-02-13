@@ -1,0 +1,7 @@
+{{- range $index, $webhook := .Values.instances }}
+  {{ include "webhooks.buildconfig" $webhook }}
+  {{ include "webhooks.deploymentconfig" $webhook }}
+  {{ include "webhooks.imagestream" $webhook }}
+  {{ include "webhooks.route" $webhook }}
+  {{ include "webhooks.service" $webhook }}
+{{- end }}
