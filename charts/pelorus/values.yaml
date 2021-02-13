@@ -60,5 +60,8 @@ webhooks:
 mongodbs:
   instances:
   - app_name: mongodb-build
+    namespace: openshift
+    mongodb_version: 3.6
+    memory_limit: 512Mi
   
 snapshot_schedule: "@monthly"

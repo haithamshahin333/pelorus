@@ -85,7 +85,7 @@ spec:
       - mongodb
       from:
         kind: ImageStreamTag
-        name: mongodb:{{ .mongodb_version }}
+        name: "mongodb:{{ .mongodb_version }}"
         namespace: {{ .namespace }}
       lastTriggeredImage: ""
     type: ImageChange

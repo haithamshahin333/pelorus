@@ -13,7 +13,6 @@ spec:
     protocol: TCP
     targetPort: 27017
   selector:
-    app.kubernetes.io/name: {{ .app_name }}
-    deploymentconfig: {{ .app_name }}
+    name: {{ .app_name }}
   type: ClusterIP
 {{- end }}
