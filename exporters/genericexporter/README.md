@@ -1,29 +1,19 @@
-# Commit Time Exporter
+# Generic Exporter (Builds)
 
-The Commit Time exporter is responsible for collecting the following metric:
+The Generic exporter is responsible for collecting the following metric from an associated webhook/mongodb instance:
 
 ```
-commit_timestamp{app, commit_hash, image_sha, namespace} timestamp
+commit_timestamp{app, commit_hash, image_sha} timestamp
 ```
 
-The job of the commit time exporter is to find relevant build data in OpenShift and associate a commit from the build's source code repository with a container image built from that commit. We capture a timestamp for the commit, and the resulting image hash, so that the Deploy Time Exporter can later associate that image with a production deployment.
+Deploy an instance of a webhook/mongodb and post build information to the webhook as part of your build. From there, the generic exporter will retrieve the build information from the db and query the respective git provider to get the commit time associated with the build.
 
-In order for proper collection, we require that all builds associated with a particular application be labelled with a common label (`app.kubernetes.io/name` by default).
-
-Configuration options can be found in the [config guide](/docs/Configuration.md)
-
-## Supported Integrations
-
-This exporter currently pulls build data from the following systems:
-
-* OpenShift - We look for `Build` resources where `.spec.source.git.uri` and `.spec.revision.git.commit` are set. This includes:
-  * Source to Image builds
-  * Docker builds
-  * JenkinsPipelineStrategy builds
-
-Then we get commit data from the following systems through their respective APIs:
-
-* GitHub
-* GitHub Enterprise (including private endpoints)
-* Bitbucket _(coming soon)_
-* Gitlab _(coming soon)_
+Expected data model of build info sent to webhook/mongodb:
+```
+{"app": "APP NAME", 
+"commit":"COMMIT HASH", 
+"image_sha":"IMAGE HASH", 
+"git_provider": "PROVIDER", (i.e. github, gitlab, bitbucket)
+"repo":"REPO URL", 
+"branch":"REPO BRANCH"}
+```
