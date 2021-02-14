@@ -51,7 +51,7 @@ if __name__=='__main__':
     mongo_servicename = os.environ.get('MONGODB_SERVICE_HOST')
     mongo_database = os.environ.get('MONGODB_DATABASE')
     db = create_mongo_client_connection(mongo_username, mongo_password, mongo_servicename, mongo_database)
-    db.builds.createIndex({"inserted_date":1}, {expireAfterSeconds: 86400})
+    db.builds.createIndex({"inserted_date":1}, {"expireAfterSeconds": 86400})
 
     secret = os.environ.get('WEBHOOK_SECRET')
 
