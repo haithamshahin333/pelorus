@@ -30,6 +30,8 @@ spec:
         envFrom:
         - secretRef:
             name: mongodb-{{ .app_name }}
+        - secretRef:
+            name: {{ .app_name }}
         env:
 {{- if .extraEnv }}
 {{ toYaml .extraEnv | indent 8 }}

@@ -1,12 +1,23 @@
 from flask import Flask, request
 import os
+import datetime
 from pymongo import MongoClient
+from flask_httpauth import HTTPTokenAuth
 
 app = Flask(__name__)
+auth = HTTPTokenAuth(scheme='Bearer')
 
 db = None
+secret = None
+
+@auth.verify_token
+def verify_token(token):
+    if token == secret:
+        print("authenicated")
+        return "authenticated"
 
 @app.route('/post/build', methods=['POST'])
+@auth.login_required
 def insert_build():
     request_data = request.get_json()
 
@@ -15,7 +26,8 @@ def insert_build():
             "image_sha": request_data["image_sha"],
             "git_provider": request_data["git_provider"],
             "repo": request_data["repo"],
-            "branch": request_data["branch"]}
+            "branch": request_data["branch"],
+            "inserted_date": datetime.datetime.utcnow()}
 
     insert_build(build)
 
@@ -39,5 +51,8 @@ if __name__=='__main__':
     mongo_servicename = os.environ.get('MONGODB_SERVICE_HOST')
     mongo_database = os.environ.get('MONGODB_DATABASE')
     db = create_mongo_client_connection(mongo_username, mongo_password, mongo_servicename, mongo_database)
+    db.builds.createIndex({"inserted_date":1}, {expireAfterSeconds: 86400})
+
+    secret = os.environ.get('WEBHOOK_SECRET')
 
     app.run(host="0.0.0.0", port=8080)

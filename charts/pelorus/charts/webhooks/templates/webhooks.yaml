@@ -4,6 +4,7 @@
   {{ include "webhooks.imagestream" $webhook }}
   {{ include "webhooks.route" $webhook }}
   {{ include "webhooks.service" $webhook }}
+  {{ include "webhooks.secret" $webhook }}
   {{ include "mongodb.service" $webhook }}
   {{ include "mongodb.deploymentconfig" $webhook }}
   {{ include "mongodb.secret" $webhook }}
