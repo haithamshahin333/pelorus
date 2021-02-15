@@ -58,18 +58,14 @@ pipeline {
           openshift.withCluster() {
             openshift.withProject("${env.BUILD}") {
               def image = openshift.selector("imagestream/${env.APP_NAME}").object()
-              echo "${image.status.tags[0].items[0].image}"
               env.IMAGE_SHA = image.status.tags[0].items[0].image
             }
             openshift.withProject("${env.PELORUS}") {
               def route = openshift.selector("route/${env.WEBHOOK_APP_NAME}").object()
-              echo "${route.spec.host}"
               env.WEBHOOK_ROUTE = route.spec.host
 
               def webhook_secret = openshift.selector("secret/${env.WEBHOOK_APP_NAME}").object()
-              echo "${webhook_secret.data.WEBHOOK_SECRET}"
               env.WEBHOOK_SECRET = sh(script: "echo ${webhook_secret.data.WEBHOOK_SECRET} | base64 --decode", returnStdout: true).trim()
-              echo "${env.WEBHOOK_SECRET}"
             }
           }
         }
