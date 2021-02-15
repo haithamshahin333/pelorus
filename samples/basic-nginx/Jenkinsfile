@@ -68,7 +68,8 @@ pipeline {
 
               def webhook_secret = openshift.selector("secret/${env.WEBHOOK_APP_NAME}").object()
               echo "${webhook_secret.data.WEBHOOK_SECRET}"
-              env.WEBHOOK_SECRET = new String(webhook_secret.data.WEBHOOK_SECRET.decodeBase64())
+              env.WEBHOOK_SECRET = sh(script: "echo ${webhook_secret.data.WEBHOOK_SECRET} | base64 --decode", returnStdout: true).trim()
+              echo "${env.WEBHOOK_SECRET}"
             }
           }
         }
