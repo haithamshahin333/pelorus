@@ -1,6 +1,8 @@
-# A Sample OpenShift Pipeline for a Nginx Application
+# A Sample OpenShift Pipeline for a Nginx Application - Generic CommitTime Exporter with Build Webhook
 
-This example demonstrates how to implement a full end-to-end Jenkins Pipeline for a static application in OpenShift Container Platform. This sample demonstrates the following capabilities:
+This example demonstrates how to implement a full end-to-end Jenkins Pipeline for a static application in OpenShift Container Platform. It assumes that the build webhook and generic committime exporter are deployed in the pelorus namespace.
+
+This sample demonstrates the following capabilities:
 
 * Deploying an integrated Jenkins server inside of OpenShift
 * Running both custom and oob Jenkins slaves as pods in OpenShift
