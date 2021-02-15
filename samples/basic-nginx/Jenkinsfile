@@ -66,8 +66,8 @@ pipeline {
               echo "${route.spec.host}"
               env.WEBHOOK_ROUTE = route.spec.host
 
-              def webhook-secret = openshift.selector("secret/${env.WEBHOOK_APP_NAME}").object()
-              echo "${webhook-secret.data}"
+              def webhook_secret = openshift.selector("secret/${env.WEBHOOK_APP_NAME}").object()
+              echo "${webhook_secret.data}"
               env.WEBHOOK_ROUTE = route.spec.host
             }
           }
