@@ -80,6 +80,7 @@ pipeline {
         sh """
         echo "running curl command"
         curl --request POST 'http://${env.WEBHOOK_ROUTE}/post/build' \
+        --header 'Authorization: Bearer ${env.WEBHOOK_SECRET}' \
         --header 'Content-Type: application/json' \
         --data-raw '{"app": "${env.APP_NAME}", 
         "commit":"${env.GIT_COMMIT}", 
