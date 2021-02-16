@@ -7,5 +7,5 @@
   {{ include "webhooks.secret" $webhook }}
   {{ include "mongodb.service" $webhook }}
   {{ include "mongodb.deploymentconfig" $webhook }}
-  {{ include "mongodb.secret" $webhook }}
+  {{ include "mongodb.secret" $ }}
 {{- end }}
